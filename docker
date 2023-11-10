@@ -1,0 +1,117 @@
+docker 
+------------
+docker run -it --name vteboa -v /data01 nginx /bin/bash
+
+-it = interactive terminal
+vteboa = container name
+-v = volume
+/data01 = container directory name
+docker ps = running container
+docker ps -a = all container list
+docker rm vtevoa = delete container
+docker inspect (volume name) = creation details 
+
+jenkins container
+-------------
+jenkins image(name volume)
+=docker run -p 8080:8080 -p 50000:50000 jenkins
+=docker run --name vte01 -p 8080:8080 -p 
+ 50000:50000 -v vte01_jenkins_home_vol01:/var/jenkins_home 
+   jenkins
+ 
+=docker run -dt --name vte01 -p 8080:8080 -p 56000:50000
+-v /opt/jenkins 
+to go inside container
+= docker exec -it vte01 /bin/bash
+
+dockerfile
+---------------
+ install tomcat on centos - FROM
+pull centos from dockerhub - RUN
+install java - RUN
+craete /opt/tpmact directory - WORKDIR
+change work directory to /opt/tomcat - ADD/RUN
+download tomact packages - RUN
+extract tar.gz file - RUN
+remane tomact directory - 
+tell docker to run it on port 8080 - EXPOSE
+start tomcat service -CMD
+ 
+ 
+ dockerfile----
+ 
+FROM centos:latest
+RUN yum install java -yum
+RUN mkdir /opt/tomcat
+WORKDIR /opt/tomcat
+ADD (tomact download link) .
+RUN tar -xvzf apache.tar.gz .
+RUN mv apache/* /opt/tomcat
+EXPOSE 8080
+COPY ./webapp.war /opt/tomcat/webapps
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+
+
+
+create a image
+= docker build -t mytomcat .
+
+create container
+=docker run -d --name demo-container -p 8081:8080 mycomcat
+
+docker stop (container name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
