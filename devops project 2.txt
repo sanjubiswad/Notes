@@ -1,0 +1,300 @@
+27.lecture
+---------------
+ansible 
+
+create a host file for jenkins master under /opt
+vi hosts-
+
+[jenkins-master]
+10.2.2.
+
+[jenkins-master:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/opt/dpp.pem
+
+[jenkins-slave]
+10.2.2.13
+
+[jenkins-slave:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/opt/dpp.pem
+
+mv dpp.pem /opt
+chmod 400 dpp.pem
+ansible all -i hosts -m ping (to check system ping)
+
+-------------
+28.lecture
+-------------
+1.add jenkins repo keys to system
+2.add repo to system
+3.install dependencies
+4.install jenkins
+
+jenkins-master-setup.yaml
+-----------
+---
+- hosts: jenkins-master
+  become: true
+  tasks:
+  - name: add jenkins key
+    apt-key:
+	  url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+	  state: present
+	  
+  - name: add jenkins repo
+    apt_repository:
+	  repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+
+  - name: insatll java
+    apt:
+	  name: openjdk-11-jre
+	  state: present
+
+  - name: insatll jenkins
+    apt:
+	  name: jenkins
+	  state: present
+	  
+  - name: start jenkins service
+    service:
+		name: jenkins
+		state: started
+	
+  - name: enable jenkins to start at boot time 
+    service: 
+      name: jenkins 
+      enabled: yes 	
+
+--------------	  
+29.lecture
+-----------
+vi jenkins-master-setup.yaml
+ansible playbook -i /opt/hosts jenkins-master-setup.yaml --check
+
+port 8080 need to be configure for jenkins in aws 
+
+30.lecture
+-----------
+chnge the port number in terraform file
+terraform apply --auto approved
+open jenkins in browser
+ 
+31.lecture
+------------
+1.update system
+2.install java
+3.download maven
+4.extract it
+5.add path to bash_profile
+
+vi jenkins-slave-setup.yaml
+---
+- hosts: jenkins-slave
+  become: root
+  tasks: 
+  - name: update ubuntu repo and cache
+	apt: 
+	  update_cache: yes 
+      fource_apt_get: yes 
+      cache_valid_time: 3600 
+	  
+  - name: install java
+	apt:
+	  name: openjdk-11-jre
+	  state: present
+	
+  - name: download maven package
+    get_url: 
+	  url: https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz
+	  dest: /opt
+	  
+  - name: extract maven packages
+    unarchive:
+	  src: /opt/apache-maven-3.9.2-bin.tar.gz
+	  dest: /opt
+	  remote_src: yes
+	  
+32.lecture
+---------------
+create jenkins-slave-setup.yaml this file under opt
+dry run this playbook
+ansible-playbook -i /opt/hosts/jenkins-slave-setup.yaml --check
+
+remove       fource_apt_get: yes 
+run this playbook
+ls 
+cd apache-maven
+cd bin
+ls
+./mvn --version
+mvn only work if you use full path /opt/apache-maven...
+or add this file in bash profile
+
+35.lecture
+---------------
+jenkins master slave configure
+1.change password fpr jenkins
+manage jenkins -> credential -> ssh username
+-> maven server -> add private key - dpp key
+
+36.lecture
+--------------
+add node
+manage jenkins -> manage nodes ->new ndes -> permanent agent
+
+add private ip - add cred - save
+create a project and run it on maven label
+execute a shell command 
+= echo "hello i am slave system" >> /home/ubuntu/maven.txt
+
+37.lecture
+----------
+create pipeline script
+1.declarative
+2.scripted 
+we will use declarative pipeline
+= 
+pipeline{
+	agent {
+		node {
+			label 'maven-slave'
+		}
+	}
+	
+	stages {
+		stage('clone-code') {
+			steps {
+				git branch: 'main', url: 'https://github.tweet.git'
+			}
+		}
+	}
+}
+
+**clone the code pipeline script using jenkins pipeline
+syntax 
+git branch: 'main', url: 'https://github.tweet.git'
+
+
+
+37.lecture
+-----------------
+jenkins file undertweet-trend
+= touch jenkinsfile
+(copy pipeline and paste here)
+
+git add jenkinsfile
+git add .
+git commit -m "1st jenkins file"
+git push origin main
+
+pipeline select git 
+edit jenkins file ...remove git clone and add build stage
+=
+environment {
+	PATH = "/opt/apache-maven-3.9.2/bin:$PATH"
+}
+ 
+ stages {
+      stage ("build"){
+		steps {
+			sh 'mvn clean deploy'
+		}
+	}
+  
+  
+  }
+
+
+38.lecture
+------------
+create github token and add it in jenkins
+manage jenkins - > credentials ->system -> global credentials ->
+add credentials - > username and password
+
+39.lecture
+--------------
+multibranch pipeline
+create new branch git
+= git checkout -b stage
+will delete jenkinsfile and add it into stage branch
+
+rm -rf jenkinsfile 
+git add .
+git commit -m "adding stage branch"
+git push origin stage
+
+add jenkinsfile in stage branch
+
+
+40.lecture
+--------------------
+github webhook (it will automatically trigger
+pipeline)
+
+1.install "multibranch scan webhhok trigger" plugin
+from dashboard --> manage jenkins --> manage plugins
+ -->available plugins
+ 
+ search for "multibranch scan webhook trigger" plugin and install it.
+
+2. got to multibranch pipeline job
+--> configure -->scan multibranch pipeline -->scan by weebhook
+trigger token : token name = dpp-token
+
+3. add webhook to github repo 
+repo -> settings -> webhook -> add webhook
+=payload url: <jenkins_ip>:8080/mutibranch-webhook-trigger/
+ invoke?token=<token_name(dpp-token)>
+ 
+conetnt type: application/json
+which event would you like to trigger this webhook
+= just the push event
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
