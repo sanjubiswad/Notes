@@ -5,4 +5,12 @@ certificate problem: unable to get local issuer certificate --
 (execute this command)
 -> git config --global http.sslbackend schannel
 
-2.
+2.sometimes origin will not work,  then try this (specially line 14)
+----------------------
+git remote set-url origin git@github.com:sanjubiswad/notes.git
+
+ssh-keygen -t ed25519 -C "sanjubiswad853@gmail.com"
+
+git branch -M main
+git remote add origin https://github.com/sanjubiswad/Notes.git
+git push -u origin main
