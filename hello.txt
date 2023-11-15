@@ -1,9 +1,0 @@
-hello you
-
-git remote set-url origin git@github.com:sanjubiswad/notes.git
-
-ssh-keygen -t ed25519 -C "sanjubiswad853@gmail.com"
-
-git branch -M main
-git remote add origin https://github.com/sanjubiswad/Notes.git
-git push -u origin main
