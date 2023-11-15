@@ -1,0 +1,24 @@
+linux question
+=================
+1.shell script to list of process
+=ps -ef | awk -F" " '{$print 2}'
+
+2.error from remote log
+=curl google.com | grep HREF
+
+3. print number that divisible  bye 3 or 5 and not divisible
+ by 15
+ 
+ if ([ 'expr $i %3' ==0] || ['expr $i %5' ==0]) && 
+ [ 'expr $i %15' !=0];
+ then 
+		echo $i
+ fi		
+ 
+ 
+
+		
+ 
+ 
+ 
+ 

@@ -1,0 +1,10 @@
+docker
+----------
+anonymous volume
+= docker run -v /data01
+
+named volume
+= docker run -v vte_vol1:data01
+
+host volume 
+= docker run -v /opt/data01:/data01

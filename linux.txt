@@ -1,0 +1,103 @@
+linux
+===========
+sudo su -
+mv file2 dir2
+mv file1 file3
+
+find command
+-name = for searching a file with its name
+-user = for files whose owner is a particular user
+-group = belonging to a particular group
+
+= find / -name file
+= diff file2 file3
+
+grep command
+= grep hello file1
+= grep -i hello file2 (-i ignore case sensitive )
+
+to search a directory
+= ls -l | grep environment
+
+to search for a directory
+=ls -l | grep ^d
+
+sed command(to replace a word)
+= sed -i 's/old text/new text/' file_name
+
+to show particular line
+=sed -n '5/10p' file_name
+
+creating user
+=useradd john
+
+change the existing modification
+=useradd -G john mark
+
+passwd john
+
+to enable  password based auth
+=vi /etc/ssh/sshd_config
+
+chnage passwordauthentication to yes
+=Passwordauthentication yes
+=service sshd reload
+
+
+======================================
+linux by abhishek
+========================================
+free = ram usage
+nproc = cpu usage
+top = to show all the running process
+df -h = disk  space
+free -g = free space
+
+vi nodehealth.shell
+#!/bin/bash
+set -x (debug mode)
+echo "print disk space"
+df -h
+
+shell scripting in aws
+
+ =  
+
+ps -ef = process details
+ps -ef | grep "amazon" = amazon process details
+ 
+vi test
+=my name is sanju
+
+grep name test | awk -F" " '{print $4}' (awk -f for particular column)
+=sanju
+
+=============
+history file
+===========
+echo $HISTFILE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

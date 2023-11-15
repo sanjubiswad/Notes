@@ -1,0 +1,86 @@
+---
+- name: install tomcat
+  hosts: all
+  become: true
+  vars:
+    - tomcat_url: https:/ 
+    - tomcat_package: apache
+  
+  tasks:
+  - name: install java
+    yum:
+	  name: java
+	  state: latest
+  
+  - name: download tomcat
+    get_url:
+	  url: "{{ tomcat_url }}"
+      dest: /usr/local
+	  
+  - name: extract tomcat
+    unarchive:
+	  src: /usr/local/{{tomcat_package}}.tar.gz
+	  dest: /usr/local
+
+
+
+ansible vault
+ 	  ansible-vault create vault-pass.yml
+	  ansible-vault view vault-pass.yml
+	  password=
+	  
+git clone process
+--------------
+git clone https://sanjub:password123@github.com/sanjub/vault.git
+
+ \vi ansible_vault.yml
+---
+- name: ansible playbook to test ansible vault
+  hosts: all
+  become: true
+  tasks:
+  - name:clone a repo
+    git: 
+	repo: url here
+	dest: /opt/ansadmin/test-vault
+
+for access ansbile vault
+ansible-playbook -i hosts ansible-vault.yml --ask-vault-pass
+for passing password
+--------
+ansible-playbook -i hosts ansible-vault.yml --vault-password-file pass.yml
+
+
+valaxy technology
+--------------
+1.terraform
+2.aws severless
+3.sonarcube
+4.jfrog
+5.maven
+6.jenkins
+7.linux for aws
+8.kubernetes
+9.real time project aws
+10.devops project
+
+
+
+
+
+
+
+	  
+	  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
