@@ -1,8 +1,0 @@
-aws access key
-= AKIA2EYKIVMC6Z54UA2J
-
-Secret access key
-= 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
-
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC5LncaUPu1JDpv3Vf/hQ857ALu1a1/QynOPACdB0I5P sanjubiswad853@gmail.com
-
