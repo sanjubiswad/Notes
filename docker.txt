@@ -51,7 +51,14 @@ EXPOSE 8080
 COPY ./webapp.war /opt/tomcat/webapps
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
 
+dockerfile
+----------------
+FROM nginx:latest
+MAINTAINER NAME EMAIL
+RUN apt-get -y update && apt-get -y upgrade && apt-get install -y php-fpm
 
+build image
+= docker build -t "webdev":Dockerfile"
 
 create a image
 = docker build -t mytomcat .
