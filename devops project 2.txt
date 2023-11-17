@@ -324,6 +324,53 @@ add stage
 valaxy-java quality gates
 add condition code smell = 50 
 
+50.lecture
+------------------------
+add quality gate stages
+
+ stage("Quality Gate"){
+    steps {
+        script {
+        timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+    if (qg.status != 'OK') {
+      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    }
+  }
+}
+    }
+  }
+
+
+ 51.lecture - Jfrog artifactory
+------------------------------
+create artifactory account
+generate access token with username
+add username and password inder jenkins cred
+install artifactory plugin
+update jenkinsfile with jar publish stage
+create dockerfile
+create and publish docker image on artifactory 
+
+
+
+51.lecture - artifactoryaccount creatiion
+------------------------------
+create cloud version jfrog
+create maven repo
+
+52.lecture - jfrog integration with jenkins
+------------------------------
+platform conf -> access token
+jenkins-access-token -admin ->generate --copy access token
+
+manage jenkins -> credentials -> system -> global credential ->username with password
+copy the key here
+
+add plugin -> search for artifactory
+
+53.lecture - jfrog stages to add in jenkins
+-----------------------------------
 
 
 
