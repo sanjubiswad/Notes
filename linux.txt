@@ -138,6 +138,232 @@ nmap -A 8.8.8.8 (to check particular port of remote server)
 
 
 
+==============================
+==============================
+60 Linux Interview Questions - M prashant
+
+Linux Basics:
+
+What is the use of echo command?
+= echo will print in terminal
+
+How to check the computer name or hostname in Linux?
+=using hostname command
+
+How to check the current user in Linux terminal?
+=whoami
+
+How to check your current path/directory you are working in?
+=pwd
+
+Explain the difference between relative and absolute path?
+=relative path - start from current directory
+= absolute path - the full path to a file a or directory
+
+Which command to be used to create a file in Linux?
+=touch file1
+cat >
+vi 
+nano
+
+How will you edit an existing file on a Linux server?
+=vi file1
+nano file1
+cat >> file1
+
+How to rename a file in Linux?
+=mv file1 file2
+
+How to search for a string  in a file?
+=grep mita csv1
+
+less csv1
+/mita (it will highlight mita)
+
+Difference between grep and egrep?
+=egrep "key1|key2" csv1 (it will show multiple string at same time)
+
+How can you read a file without using cat command?
+=less file
+more file1
+vi file1
+
+What is the advantage of using less command?
+= forward, backward search is easy
+navigation is easy
+
+How to check a file's permission?
+=ls -l
+ll
+getfacl csv1
+
+How to check the IP of your Linux server?
+=ifconfig
+ip addr
+
+How to read the top 5 lines in a file?
+=head -5 file1
+
+How to read the last 5 lines in a file?
+=tail -5 file1
+
+How to list hidden files?
+=ls -la
+
+How to see all the recently used commands?
+=history 
+$HIOSTFILESIZE  = 20000
+
+What is root?
+=parent directory
+
+What is inode and how to find it for a file?
+=ls -li
+inode is an index node. unique id for file system
+
+Which command can you use for finding files on a Linux system?
+=find , locate
+find / -name csv1
+locate csv1
+
+Command for counting words and lines?
+=wc 
+wd -l
+
+How can you combine two commands? or What is pipe used for?
+= to combine to command
+
+How to view the difference between two files? (diff file1 file2)
+=diff file1 file2
+
+What is the use of the shred command do? (permanently delete a file which is unable to recover)
+=shred -u file1
+shred --remove  file1
+
+How to check system architecture info (dmidecode and lscpu)
+=dmidecode and lscpu
+
+How to combine two files?
+= cat file1 file2
+cat file1 file2 > file3
+
+
+
+
+
+
+
+
+
+How can you find the type of file? (using file command)
+= file file1
+
+How to sort the content of a file?
+= sort file1
+cat file1 | sort
+
+Different ways to access a Linux server remotely (from a Windows machine)?
+=
+
+File Permissions:
+What are different types of permissions for a file in Linux?
+How to check the permissions given to a file?
+Which permission allow a user to run an executable file (script)
+=x
+
+Redirection:
+How to write the output of a command into a file?
+=ls -l > file2
+
+How to write something in a file without deleting the existing content?
+=ls -l >> file2
+
+How to redirect an error of a command into a file?
+
+Automation: 
+How to Automate any task or script?
+=using cron jobs
+
+How to check scheduled jobs?
+=crontab -l
+
+What is the meaning of this cron job? * * * * *
+
+If your cron job didn't work, how would you check? (check system time, crontab entry, check /var/log/messages)
+=check system time
+crontab entry
+check /var/log/messages
+
+Services:
+What is daemon service?
+=service that keep runs on backgroud
+
+How to check if a service is running or not?
+=systemctl status httpd
+
+How to start/stop any service?
+=systemctl start httpd
+
+System Monitoring:
+How to check for free disk space? df
+=df -h
+
+How to check the size of a directory's content? du
+=du 
+How to check CPU usage for a process? top command
+=top 
+
+Process:
+What is a process in Linux?
+How to check if a process is running or not?
+= ps command
+ps -ef | grep httpd
+
+How to kill a process?
+=kill 21094
+
+Difference between kill and kill -9
+=kill -9 will terminate forcefully
+
+Networking:
+How to check if a IP/Server is accessible or not?
+=telnet or ping 
+
+Which command to use to get info about ports?
+=netstat -tunlp
+
+How to check open port on Linux system?
+=netstat -putan | grep :22
+
+How to check network interfaces in Linux?
+=ifconfig and netstat
+
+Difference between Telnet and SSH?
+=ssh is secured and telnet is not secured
+
+
+SSH:
+Which service should be running on server to allow you to connect remotely?
+=ssh or sshd
+
+What is SSH?
+=to connect two linux servers
+
+Why it is called as Secure Shell?
+=bcoz of it encryption
+
+WHat id default port for SSH?
+=22
+
+Which command is used to access a linux system from a terminal or another linux server?
+ssh user@198.0.0.0 
+
+Archive:
+If you want to transfer a large file (10GB) remotely, what would be the first thing you will do?
+Difference between tar, gzip and gunzip
+
+
+
 
 
 
