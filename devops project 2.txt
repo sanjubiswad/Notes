@@ -253,6 +253,93 @@ which event would you like to trigger this webhook
 
 
 
+44. lecture - sonarcube integration
+----------------------------
+create an sonarcube account at https:/sonarcloud.io
+generate authentication token for sonarcube
+generate token for jenkins
+download "sonarcube scanner" plugin on jenkins
+configure sonarcube server
+add sonarcube scanner to jenkins
+create sonarcube properties file
+add sonarcube stage in the jenkinsfile
+
+using github account ...then login
+
+45.lecture
+----------------------
+add sonarcube plugin
+add sonarcube server
+system- >sonarcube server -> add -> sonarcube server
+url-> sonnarclou.io ->save
+
+tools->add sonarcube scanner -> save
+
+46.lecture
+-----------------
+sonarcube properties file
+account -> create a new organisation manually
+
+create project
+information -> collect name and projject key details
+ and add ot in sonar.verbose file
+ 
+ save as "sonar-project-properties" withoutut extension
+
+47.lecture
+--------------
+add sonarcube stage in out jenkinsfile
+	  stage('sonarcube analysis') {
+	  environment {
+	    scannerhome = tool 'valaxy-sonar-scanner' // same as define in jeknins
+	  }
+	  steps{
+	  withSonarQubeEnv('valaxy-sonar-server')
+	  sh "${scannerhome}/bin/sonar-scanner"
+	  }
+	  }
+
+jenkins ip address automatically chnaged so we need
+ to update new ip in github webhook
+ 
+ update key of the organisation in sonar.verbos file
+ 
+ 
+48.lecture
+---------------------------
+how to enable unit test in jenkinsfile
+add stage 
+	  stage("test") {
+		steps {
+			echo "unit test started"
+			sh 'mvn surefire-report:report'
+			echo "unit test completed"
+		}
+		
+	}
+
+
+49. lecture - sonar quality gates
+------------------------------
+valaxy-java quality gates
+add condition code smell = 50 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
