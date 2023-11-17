@@ -78,6 +78,100 @@ history file
 echo $HISTFILE
 
 
+=============================
+=============================
+Linux Interview Questions and Answers
+
+Q-1 How will you change the default user id value in Linux?
+Q-2 root# rm -rf /tmp/test gives error operation not permitted. Reason?
+Q-3 /etc/hosts (Which RPM is responsible for creating this file).
+Q-4 What is the difference between RPM and YUM?
+Q-5 What is the difference between Hard and Soft Link?
+Q-6 What is a sticky bit?
+Q-7 How will you check open ports on Linux Server?
+Q-8 How will you check open ports on remote servers (without login)
+Q-9 Your site is throwing 500 error, how will you start troubleshooting?
+Q-10 How will you start troubleshooting if your site is down?
+Q-11 How will you create space on disk if it is showing 100% used?
+Q-12 What is a package of sar command and what does it do?
+
+ans
+========
+1. vi /etc/login.defs
+change uid min and uid max
+useradd tom
+id tom
+
+2. touch /tmp/test
+chattr +i /tmp/test (file will not delete even if we use root)
+rm -rf /tmp/test
+#operation not permitted
+
+chattr -i /tmp/test (then file will be deleted)
+
+3. rpm -qf /etc/hosts
+#setup-2.12.noarch
+touch /tmp/test
+rpm -qf /tmp/test
+file is not owned by any package
+
+4. rpm = red hat package manager
+ rpm -ivh httpd.centos.rpm
+ (i = install, v= verbos, h=hash)
+ -qPR = dependencies to check for particular package
+ 
+5. if we hard link a file and then delete the original file
+data will be linked to the linked file
+but in soft link data will be lost
+
+6. sticky bit on folder
+only owner/root can delete the folder 
+
+7. netstat -tunlp (to check which port is open)
+
+8. yum install nmap
+nmap -A 8.8.8.8 (to check particular port of remote server)
+
+11. df -Th (will show free space in redable format)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
