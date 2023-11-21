@@ -1,0 +1,27 @@
+auto scaling
+-> horizontal scale up 
+= it will create more ec2 with same specification
+
+-> vertical scale up
+= it will inrease ram or storage or high specification ec2
+
+1. manual scaling , 
+2.dynamic scaling
+ a. target tracking policy = it will try to 
+    fix load in fixed target value (like cpu 70%)
+	
+ b. simple scaling policy = simply add number of instances if its 
+    reach fixed cpu usage
+	
+ c. step scaling policy = it will add step like if its 50-60% lead then
+    add 1 one or more instaces
+	
+	
+Load balancer
+===================
+1. application load balancer - layer 7 protocols
+2. network load balancer - layer 4 protocols - transport layer
+3. classic loqad balancer - both layer 4 and 7
+
+icmp protocols dont need to go through load balancer
+because its not works on layer 4 or 7
