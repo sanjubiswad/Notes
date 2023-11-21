@@ -54,14 +54,41 @@ git branch strategy - day 10
 ==================
 
 1. git fetch vs git pull
+=git fetch is the command that tells your local git to 
+retrieve the latest meta-data info from the original 
+(yet doesn't do any file transferring. It's more like
+ just checking to see if there are any changes available).
+ git pull on the other hand does that AND brings 
+ (copy) those changes from the remote repository
+ 
 2. git diff vs git status
-3.what is .git folder deleted?
+=git status only tells you the state of your file changes, 
+git diff tells you the exact changes
+
+3. what is .git folder deleted?
+= the information saved by Git will be lost, and the
+ directory will no longer act as a Git repository.
+ 
+ 
+ 
 4. git stash, git stash apply, stash pop, stash drop
+=
 5. git revert vs git reset
+=
+
 6. can you recover a deleted branch?
+=
 7. how to revert bad commit which is already pushed?
+=git revert <commit_hash>
+
 8. git reflog?
 9. how to delete a branch?
+=Delete a branch with git branch -d <branch> . 
+The -d option will delete the branch only if it
+ has already been pushed and merged with the remote 
+ branch. Use -D instead if you want to force the
+ branch to be deleted
+ 
 10. command to merge two branch
 11. coomand to push and pull chnages in git
 12. rollback the last commit in git
