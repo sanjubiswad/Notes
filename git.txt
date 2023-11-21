@@ -14,3 +14,122 @@ ssh-keygen -t ed25519 -C "sanjubiswad853@gmail.com"
 git branch -M main
 git remote add origin https://github.com/sanjubiswad/Notes.git
 git push -u origin main
+
+========================
+git question by abhishek - day 11
+=======================
+to check remote location first, if git push not working
+=git remote -v
+
+2. clone vs fork
+3. branching
+= git branch division (or)
+git checkout -b division
+
+git checkout main (to change branch)
+
+for git merge
+= git merge , git rebase , git cherry-pick
+
+to see the changes in division branch
+=git log division
+copy the commit id 
+
+to merge into main branch
+= git cherry-pick (commit id)
+
+git log --oneline (to see log in oneline)
+
+git merge vs git rebase
+= both will merge the commit, but with rebase you will get linear commits,
+which is not pssible with git merge, it will always show in top
+
+ git merge is a way of combining changes from one branch (source branch)
+ into another branch (target branch) where as git 
+ rebase is a way of moving the changes from one 
+ branch onto another branch
+
+==================
+git branch strategy - day 10
+==================
+
+1. git fetch vs git pull
+2. git diff vs git status
+3.what is .git folder deleted?
+4. git stash, git stash apply, stash pop, stash drop
+5. git revert vs git reset
+6. can you recover a deleted branch?
+7. how to revert bad commit which is already pushed?
+8. git reflog?
+9. how to delete a branch?
+10. command to merge two branch
+11. coomand to push and pull chnages in git
+12. rollback the last commit in git
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
