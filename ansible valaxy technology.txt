@@ -64,10 +64,71 @@ valaxy technology
 9.real time project aws
 10.devops project
 
+============================
+=============================
+Answers to Ansible Interview Questions | 
+DevOps Interview Q&A | #Ansible
+
+by Abhishek. veeramalla
+=================
 
 
+1. What is configuration management?
+ 
+2. Why Ansible over the other configuration management tools.
+ = it is aggentless,
+3. Can you write Ansible Playbook to install httpd and
+  get it running?
+  
+---
+- name: install and configure
+  hosts: all
+  become: true
+  
+  tasks:
+	- name: install httpd
+	  package:
+		name: httpd
+		state: latest
+		
+	- name: run httpd
+	  service:
+		name: httpd
+		state: started
+		enabled: yes
 
-
+ 
+4. How Ansible helped your organization?
+ 
+5. Scenario: Let's assume you are not aware of the Ansible Servers that would be created in the future but still want to manage them. How can you achie
+ 
+6. What is Ansible Tower and have you used it ? If yes, why?
+ 
+7. How do you manage the RBAC of users for Ansible Tower?
+ 
+8. What is Ansible Galaxy command and why is it used for?
+ 
+9. Can you explain me structure of Ansible Playbook using Roles ?
+ 
+10. What is handlers in Ansible and why are they used?
+ 
+11. I would like to run a specific set of takks only on windows vms and not Linux vms is it possible?
+ 
+12. Does Ansible support parallel execution of tasks?
+ 
+13. What is the protocol that Ansible use to connect to windows vms?
+ 
+14. Can you explain me the variable precedence in Ansible ?
+ 
+15. How do you handle secrets in Ansible ?
+ 
+16. Can Ansible be used for lac? Infrastructure as Code ?
+ 
+17. Write an Ansible Playbook to Install and start httpd service on an existing ec2 instance.
+ 
+18. Finally, What do you think that Ansible can improve?
+has context menu
+Compose
 
 
 	  

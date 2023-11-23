@@ -363,6 +363,151 @@ If you want to transfer a large file (10GB) remotely, what would be the first th
 Difference between tar, gzip and gunzip
 
 
+===========================
+============================
+PART 2 | 70 Linux Questions for Job Interview 
+Preparation in Hindi in 60 min with Answer | Linux QnA
+
+M Prashant
+==================================
+
+What is RHEL Linux stands for? 
+What is swap space?
+=The swap space is located on disk, in the form of a 
+partition or a file. Linux uses it to extend the memory
+ available to processes, storing infrequently used pages 
+ there. We usually configure swap space during the 
+ operating system installation
+ 
+Search a word in a file and replace it in entire file?
+=sed 's/old string/new string/g' file name
+ 
+What is use of SCP command?
+=secure copy between two linux system
+
+What is use of FTP command?
+=file transfer protocol
+
+What is alias and how to setup?
+=create a shortcut command
+
+Difference between upgrade and update system?
+Name default ports used for DNS, SMTP, FTP, SSH, DHCP and squid.
+=dns - 53
+smtp - 25
+ftp - 21
+ssh - 22
+dhcp - 67,68
+squid - 3128
+http - 80
+https - 443
+
+How to check if a package is installed or not?
+=rpm -qa | grep (package name)
+
+Which of the following commands sends exactly three ping packets to google.com?
+=ping -c 3 google.com
+
+Which file contains a list of group names and GIDs? (/etc/group/)
+=/etc/group/
+
+Which of the following contains the value of the exit status of the previously executed command? 
+=$?
+
+Which command displays the number and type of processors used by a Linux system? 
+=cat /proc/cpuinfo (or)
+lscpu
+
+Which command should you use to get a list of connected USB devices? 
+=lsusb
+
+Which of the following environment variables is used as the default argument for the "cd" command when no directory is provided? 
+=home directory
+
+True or False. A command following a semicolon will be executed no matter the exit status of the command that preceded the semicolon. 
+Example: cd /root ; cat /etc/passwd
+=true
+
+What are the valid values of the exit status? 
+=0-255
+
+According to the FHS, what is the correct directory for log files?
+=/var/log/
+
+What port must be open to ping a given host? 
+=ping dont use port
+
+Can you give some name of Linux distributions?
+What is kernel?
+How will you transfer file from a Linux server to your windows OS and vice versa?
+= using ssh, ftp, sftp, winscp, filezilla
+
+How you can split a file into two?
+=split -l 3 file_name (3 number of lines)
+
+How you can get the unique values from a list?
+=sort file_name | uniq
+
+Using VI editor, how you will edit and save a file?
+=i - edit
+wq! - save
+
+What is the difference between find and locate command? 
+What is TEE Command used for?
+=
+What is Xargs used for? **
+=it convert the stdinput into comand line argument
+
+How you can find no. of files, folders in a directory?
+=ls -1(0ne) | wc -l
+
+I want to read only line 25 to 30th Line, how you will do it?
+=head -30 file_name | tail -5/10p
+
+What is the use of Tar command? 
+=for archive file
+
+How to redirect both standard output and error to a file? 
+=
+Name some commands for DNS resolution? 
+=ping , nslookup , dig , host
+----------------------------
+Automation
+What is use of At command?
+
+Which service is used by At command? 
+=atd
+
+----------------------------
+Permissions
+Which command syntax is correct if you want to 
+ assign read only permission to everyone and write
+ permission to the owner of the file? 
+=chmod 602 
+
+Which command changes the group ownership of 
+ the "/var/www" directory to the "apache" group? 
+ (chgrp apache /var/www)
+=chgrp nginx /var/www
+
+What is chmod 777 file_name?
+What is ACL and it's advantage?
+----------------------------
+Links:
+What are links in Linux?
+What are Hard and Soft Links?
+------------------------------
+Environment Variables
+What command you can use to see all the environment variables?
+What are the different ways to set environment variables?
+How you can set environment variables in Linux?
+------------------------------
+Process:
+What command allows you to display all the process IDs of the running nginx processes? 
+What is nice value of a process?
+How to check the nice value of a process? 
+What command can be used to check the %CPU
+
 
 
 

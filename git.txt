@@ -72,16 +72,40 @@ git diff tells you the exact changes
  
  
 4. git stash, git stash apply, stash pop, stash drop
-=
+=Suppose we have stashed some changes and want to apply
+ those saved in the stash. We can remove the stash using 
+ the pop flag with the git stash command (altogether git
+ stash pop command). The command will apply the stashed 
+ changes, and along with that, it will truncate the 
+ stashed files.
+ 
+=git stash apply (stash(0))
+git stash = to stash an item
+git stash clear = to clear stash item
+git stash list = to see stash list
+
 5. git revert vs git reset
-=
+=git reset = before commit. undo the from git add 
+git revert = after commit, undo last commit and commit previous one
+= git revert (commit id)
+
+it does not delete any data in the process instead rather
+git creates a new commit with the included files reverted 
+to their previous state. so your version control history
+moves forward while the state of your file move backward.
 
 6. can you recover a deleted branch?
 =
+
 7. how to revert bad commit which is already pushed?
 =git revert <commit_hash>
 
 8. git reflog?
+it will store only 90 days data in local drive
+= git log like records
+git reflog show main(master branch)
+
+
 9. how to delete a branch?
 =Delete a branch with git branch -d <branch> . 
 The -d option will delete the branch only if it
@@ -90,11 +114,24 @@ The -d option will delete the branch only if it
  branch to be deleted
  
 10. command to merge two branch
+=
+
 11. coomand to push and pull chnages in git
+=
+
 12. rollback the last commit in git
+= git revert (commit id)
 
+13. remove untracked files
+= git clean -n(dry run)
+git clean -f (forcefully)
 
-
+14. tag
+git tag -a important -m "important message"
+to see tag list
+=git tag
+git show (tag name) = to see particular commit
+gi tag -d (tag name) = delete a tag
 
 
 

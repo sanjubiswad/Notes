@@ -1,4 +1,5 @@
 auto scaling
+=====================
 -> horizontal scale up 
 = it will create more ec2 with same specification
 
@@ -25,3 +26,7 @@ Load balancer
 
 icmp protocols dont need to go through load balancer
 because its not works on layer 4 or 7
+
+Route 53
+====================
+dns for aws
