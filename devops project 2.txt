@@ -369,8 +369,11 @@ copy the key here
 
 add plugin -> search for artifactory
 
-53.lecture - jfrog stages to add in jenkins
+55.lecture - adding jenkins stage in jfrog
 -----------------------------------
+change jenkins file
+add cred in jenkins file
+rm -rf target
 
 
 

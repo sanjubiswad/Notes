@@ -30,3 +30,49 @@ because its not works on layer 4 or 7
 Route 53
 ====================
 dns for aws
+1. dns managment
+2.traffic management
+3.availability management
+4. domain registration
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
