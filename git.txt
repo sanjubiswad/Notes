@@ -43,6 +43,7 @@ git merge main
 to delete branch
 = git branch -d division
 
+
 git log --oneline (to see log in oneline)
 
 git merge vs git rebase
