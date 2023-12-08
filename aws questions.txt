@@ -36,8 +36,9 @@ dns for aws
 4. domain registration
 
 
-
-
+cloudwatch
+====================
+it work like a gatekipper, for cpu usage alarm, dashboard, metric
 
 
 
