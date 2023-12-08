@@ -25,6 +25,7 @@ to check remote location first, if git push not working
 3. branching
 = git branch division (or)
 git checkout -b division
+git checkout division
 
 git checkout main (to change branch)
 
@@ -37,6 +38,10 @@ copy the commit id
 
 to merge into main branch
 = git cherry-pick (commit id)
+git merge main
+
+to delete branch
+= git branch -d division
 
 git log --oneline (to see log in oneline)
 
