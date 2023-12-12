@@ -494,11 +494,69 @@ sg.tf
 64.lecture Terraform manifest file to setup AWS EKS
 ------------------------------------------
  
+chnge eks file
+create vpc folder and move existing file inside to this
+
+
+65.lecture terraform manifest file
+-----------------------------------------
+terraform init
+terraform validate
+terraform apply --auto-approve
+
+aws eks- check if it is created
 
 
 
+66. lecture - how to terraform destroy
+---------------------------
+comment it out sg eks and eks in vpc file
+terraform apply -- we cant use = terraform destroy bcoz it will destroy
+whole infrustucture 
 
 
+
+67. Steps to integrate Kubernetes with Jenkins
+--------------------------------------------
+aws eks we dont have master node , so we need a bootstarp server
+kubectl to manage cluster
+
+
+
+68. How to integrate EKS cluster with maven server
+--------------------------------------------
+1.Setup kubectl - download kubectl in slave system, use same version 
+as k8s version
+
+curl -o https://
+chmod +x kubectl
+mv kubectl /usr/local/bin
+kubectl version
+
+
+2.Make sure you have installed awscli latest version. If it has awscli version 1.X then remove it and install awscli 2.X
+aws = to check aws cli version
+aws cli download websearch
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+apt install unzip
+unzip awscliv2.zip
+sudo ./aws/install --update
+aws --version (install aws cli version 2.12)
+
+ 
+3.Configure awscli to connect with aws account
+ aws configure
+ Provide access_key, secret_key
+
+ 
+ 
+ 
+4.Download Kubernetes credentials and cluster configuration (.kube/config file) from the cluster
+
+= aws eks update-kubeconfig --region us-east-1 --name valaxy-eks-01
+
+kubectl get nodes
 
 
 
