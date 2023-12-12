@@ -1,0 +1,91 @@
+docker
+----------
+anonymous volume
+= docker run -v /data01
+
+named volume
+= docker run -v vte_vol1:data01
+
+host volume 
+= docker run -v /opt/data01:/data01
+
+
+
+=============================
+docker interview questions - abhishek veeramalla
+=============================
+1. what is docker?
+docker is an open source containerization platform.
+it enables developers to package application into container.
+
+2. what is dockerfile?
+
+
+3. what is docker images?
+
+
+4.what are different docker component?
+= docker client, docker host, docker registry
+
+5. which registry are you using in your org?
+=
+
+6. difference of docker COPY and docker ADD?
+
+7. difference of cmd and entrypoint in docker?
+
+
+8.how can you transfer a file from one docker 
+container to another?
+= docker cp  
+
+9. difference between Dcokerfile, compose, swarm?
+
+10. multi stage build in docker?
+= 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -324,6 +324,8 @@ add stage
 valaxy-java quality gates
 add condition code smell = 50 
 
+
+
 50.lecture
 ------------------------
 add quality gate stages
@@ -359,6 +361,8 @@ create and publish docker image on artifactory
 create cloud version jfrog
 create maven repo
 
+
+
 52.lecture - jfrog integration with jenkins
 ------------------------------
 platform conf -> access token
@@ -369,6 +373,8 @@ copy the key here
 
 add plugin -> search for artifactory
 
+
+
 55.lecture - adding jenkins stage in jfrog
 -----------------------------------
 change jenkins file
@@ -377,21 +383,117 @@ rm -rf target
 
 
 
+57.lecture - ansible playbook to install docker
+-----------------------------------
+ansible - jenkins slave setup.yml - add docker 
+
+  - name: install docker
+    apt:
+	  name:docker.io
+	  state: present
+	  
+  - name: start docker
+    service:
+	  name: docker
+	  state: started
+
+ansible-playbook -i hosts jenkins_slave_setup.yml --check
 
 
 
+58.lecture dockerfile
+------------------------
+Dockerfile
+= FROM openjdk:8
+COPY jarstagging/com/valaxy/demo-workshop/2.1.2.demo.jar ttrend.jar
+ENTRYPOINT ["java" , "-jar" , "ttrend.jar"]
+
+pom.xml version number should be same
 
 
 
+59.lecture Docker artifact repository in JFrog Artifactory
+---------------------------------------
+jfrog new repo
+quick setup- docker - valaxy- 
+
+valaxy local
+
+jenkins- manage jenkins- plugin - docker pipeline
+
+make different folder for doker , jenkins
+commit all the code changes
 
 
 
+60.lecture Add docker image publish stage to Jenkinsfile
+--------------------------------
+
+def imagename = 'valaxy01.jfrog.io/valaxy-docker-local/ttrend'
+def version = '2.0.2' ##shouldbe same as pom.xml
+ stage("Docker build") {
+   steps {
+     script {
+		echo 'docker build started'
+		app = docker.build(iamgename+":"+version)
+		echo 'docker build ends'
+		}
+	 }
+   }
+ stage ("Docker publish") {
+   steps{
+     script{
+	 echo 'docker publish started'
+	 docker.withregistry(registry, 'artifact-cred'){
+		app.push()
+	 }
+	 echo 'docker publish end'
+	 }
+   }
+ }
+
+  add this in jenkinsfile
+build will fail bcoz we need to give permission to docker .sock
+
+**add step in jenkins-slave-setup.yml
+ 
+ - name: give 777 permission on /var/run/docker.sock
+   file: 
+      path: /var/run/docker.sock
+	  state:file
+      mode: 0777
+	  
+  - name: start docker on boot time
+    service:
+	  name: docker
+	  enabled: yes
+ 
+
+ 
+61.lecture Testing Docker image by creating container out of it
+------------------------------------------
+create docker image
+= docker run -it --name ttrend -p 8000:8000 valaxy-docker-local/ttrend:2.1.2
+
+image will be created
+docker ps -a = to check all container
+open port 8000 on aws
 
 
 
+63.creating EKS using terraform
+---------------------------------------
+eks.tf
+=k8s creation of IAM roles, nodes, scalling policy 
+
+sg.tf 
+=security groups creation
 
 
 
+64.lecture Terraform manifest file to setup AWS EKS
+------------------------------------------
+ 
 
 
 
