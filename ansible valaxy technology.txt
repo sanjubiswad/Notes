@@ -1,3 +1,37 @@
+/etc/ansible/hosts used for store ip address
+instead of this we can use inventory file to store ip address
+
+vim inventory
+= [dbservers]
+172.31.62.28
+
+[webservers]
+172.31.62.100
+
+ansible -i inventory all -m "shell" -a "touch devopsclass"
+-m = module
+-a = to run shell command
+
+ansible -i inventory webservers -m "shell" -a "touch devopsclass"
+
+tasks:
+ - name: install nginx
+   apt:
+     name: nginx
+	 state: present
+or,
+   shell: apt install nginx 
+   
+ansible-playbook -vvv -i inventory first-playbook.yml
+(inventory file should be in same location)
+
+-vvv = debug every details, it will show every step to apply playbook
+
+ansible roles
+----------------------
+ansible-galaxy role init kubernetes
+
+=======================================
 ---
 - name: install tomcat
   hosts: all
@@ -100,14 +134,18 @@ by Abhishek. veeramalla
  
 4. How Ansible helped your organization?
  
-5. Scenario: Let's assume you are not aware of the Ansible Servers that would be created in the future but still want to manage them. How can you achie
+5. Scenario: Let's assume you are not aware of the 
+ Ansible Servers that would be created in the 
+ future but still want to manage them. How can you achie
  
 6. What is Ansible Tower and have you used it ? If yes, why?
+ its enterprise model, user namagement for more features
  
 7. How do you manage the RBAC of users for Ansible Tower?
  
 8. What is Ansible Galaxy command and why is it used for?
- 
+= it will create whole structure for pplaybook
+
 9. Can you explain me structure of Ansible Playbook using Roles ?
  
 10. What is handlers in Ansible and why are they used?
@@ -131,8 +169,110 @@ has context menu
 Compose
 
 
+
+==============================================
+
+praveen singampalli - ansible
+
+-m = module
+-a = argument
+
+*creating new directory
+ansible abc -m file -a "dest= /path/user1/new mode = 777 owner =user1 group = user1 state= directory"
+
+*transfering file
+ansible abc -m copy -a "src=/etc/yum.conf dest= /tmp/yum.conf"
+
+*check if the yum package installed or not
+ansible abc -m yum -a "name = demo-tomcat-1 state = present"
+
+#  to start role directories
+ansible-galaxy role init vim
+
+ansible playbook to copy a file
+---
+ - name: ply to collect host info
+   hosts: servera, serverb
+   become: ture
+   user: devops
+   tasks:
+   - name: collect host info
+     copy:
+		conent: "{{ansible_hostname}}{{ansible_processor_count}}"
+		dest: /root/hostsinfo.txt
+
+
+--- 
+- name: play to check a package
+  hosts: test
+  become: true
+  user: singampalli
+  ignore_errors: true
+  tasks:
+    - name: check for package
+	  yum:
+		name: httpd
+		state: present
+	  register: value
+	  
+	- name: call a handlers
+	  shell: 
+	    cmd: echo ""
+	  notify: a
+	  when: value | failed
+	 
+	- name: check for service
+	  yum:
+		name: httpd
+		state: started
+	  register: value2
+	  
+	- name: call b handlers
+	  shell: 
+	    cmd: echo ""
+	  notify: b
+	  when: value | failed
 	  
 	  
+	  
+Handlers
+---------------
+handlers:
+  - name: a
+	debug:
+	  msg: "installation failed"
+	  
+  - name: b
+    debug:
+	  msg: "service failed"
+	  
+	  
+	  
+	  
+
+========================================   
+	  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
