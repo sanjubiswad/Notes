@@ -248,7 +248,102 @@ handlers:
 	  
 	  
 	  
+download an artifact and unzip
+--------------------------
+---
+- name: download jar file and unzip it
+  hosts: devops
+  become: true
+  user: singampalli
+  tasks:
+    - name: create a folder
+	  file:
+	    path: /var/deploy
+		state: directory
+		
+	- name: download the tar file 
+	  get_url:
+	  url: https://artifact.com/flipcart.zip
+	  dest: /var/tmp/
 	  
+	- name: unzip
+	  command: unzip -o /var/tmp/flipcart.zip -d /var/deploy
+-0 = output
+
+
+
+ansible tags scenarioe to deploy
+-----------------------
+---
+- name: play to deploy files in grouped servers
+  hosts: all
+  become: true
+  user: singampalli
+  tasks:
+   - name: create a tar file
+     command:tar cfz /var/tmp/production.tar.gz /var/www/html
+	 when: inventory_hostname in groups['production']
+	 
+   - name: create a tar file
+     command:tar cfz /var/tmp/backup.tar.gz /var/log/httpd
+	 when: inventory_hostname in groups['backup']
+	
+
+lineinfile module
+------------------------
+lineinfile:
+ path: /var/www/html/index.html
+ line: "hello from {{ansible_hostname}}"
+
+ 
+ ansible vault
+--------------------------
+ansible-playbook unarchive.yml --vault-password-file=.file1
+file - unarchive.yml
+
+**how will you open a password proctected zip file using ansible
+------------
+
+echo "singam4devops" > .file1
+ansible-vault create crypto.yml --vault-passowrd-file=.file1
+---
+- password: singam4devops
+
+
+unarchive.yml
+---
+- name: ansible-vault
+  hosts: dev
+  become: true
+  user: singampalli
+  vars_files:
+    - crypto.yml
+  tasks:
+    - name: create a folder
+	  file:
+	    path: /test/vault
+		state: directory
+	- name: download the tar
+	  get_url:
+	    url: https://artifact/app.zip
+		dest: /var/tmp/
+		
+	- name:
+	  command: unzip -o -p {{password}} / var/tmp/app.zip -d /test/vault
+	  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ========================================   
 	  
