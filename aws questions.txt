@@ -41,8 +41,11 @@ cloudwatch
 it work like a gatekipper, for cpu usage alarm, dashboard, metric
 
 
-
-
+=====================
+praveen 
+=====================
+private subnet
+**bastion host
 
 
 
