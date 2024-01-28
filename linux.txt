@@ -508,6 +508,60 @@ What is nice value of a process?
 How to check the nice value of a process? 
 What command can be used to check the %CPU
 
+========================
+Praveen Linux
+======================
+mkdir /rhcelab
+mkdir /rhcelab/repo
+df -h /rhcelab/repo/ = used storage
+copy all packages = cp /run/media/root/rhel/server/* /ehcelab/repo/
+initilize the create repo = cd /rhcelab/repo/
+rpm -ivh createrepo-0.9.9.noarch.rpm
+run create repo command = createrepo /rhcelab/repo
+
+vi /rtc/yum.repos.d/rhcelab.repo
+[rhcerepo]
+name=rhcerepo
+baseurl=file:///rhcelab/repo
+enabled=1 
+gpgcheck=0
+
+NMCLI configuring ip netowrking
+-------------------------------
+netowrk manager command line interface
+yum install NetworkManager.->.repo.->
+systemctl start NetworkManager
+
+systemctl enable NetworkManager
+ 
+ nmcli connection show --active
+ 
+ nmcli device status
+=
+
+sudo nmcli connection add type ethernet ifname enp0s8 
+nmcli connection up ethernet-enp0s8
+
+*to change linux system ip
+nmcli connection modify ethernet-enp0s8 ipv4.address 192.168.4.26/24
+nmcli connection modify ethernet-enp0s8 ipv4.method manual
+
+*to bring connection down and up
+nmcli connection down ethernet-enp0s8
+nmcli connection up ethernet-enp0s8
+
+*to modify ipv4 gateway
+nmcli connection modify ethernet-enp0s8 ipv4.gateway "192.168.56.1"
+
+*to modify the DNS
+nmcli connection modify ethernet-enp0s8 ipv4.dns "192.168.56.1"
+
+nmcli device show esp0s8
+
+
+
+**resetting a root password in linux centos
+-----------------------------
 
 
 
@@ -518,6 +572,99 @@ What command can be used to check the %CPU
 
 
 
+
+
+
+
+===========================================
+praveen prometheus and grafana
+===========================================
+
+grafana installation
+step 1 = 
+grafana enterprise = https://packages.grafana.com/enterprise/rpm
+
+step 2 =
+vim /etc/yum.repos.d/grafana.repo
+
+step 3 = 
+name = grafana 
+baseurl = https://packages.grafana.com/enterprise/rpm
+repo_gpgcheck=1 enabled=1 gpgcheck=1 
+gpgkey=https://packages.grafana.com/gpg.key sslverify=1
+
+step 4= 
+yum install grafana-enterprise
+
+step 5= 
+sudo systemctl daemon-reload
+sudo systemctl start grafana
+server sudo systemctl status
+grafana-server
+
+step 6 = 
+sudo service grafana-server start sudo service granafa-server status bash
+sudo /sbin/chkconfig --add grafana-server./bin/grafana-server web
+
+
+
+mysql installation
+-------------------------
+https://dev.mysql.com/get/mysql80-community-release-el8-3.noarch.rpm
+sudo yum install platform-and-version-specific-package-name..rpm
+yum repolist enabled | grep "mysql.*-community.*"
+yum repolist all | grep mysql
+sudo yum-config-manager --disable mysql57-community
+sudo yum-config-manager --enable mysql80-community
+yum repolist enbled | grep mysql
+/etc/yum.repos.d/mysql-community.repo
+
+mysql-community.repo
+name=mysql 5.7 community server
+baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basesearch
+enabled=1
+gpgcheck=1
+gogkey=file:///etc/pki/rpm-gpg/rpm-grp-key-mysql-2022
+
+yum module disable mysql
+systemctl start mysqld
+systemctl status mysqld
+sudo grep 'temporary passowrd' /var/log/mysqld.log
+mysql-uroot --p
+mysql> ALTER USER 'root'@localhost
+'MyNewPass4';
+
+
+mysql port 3306
+grafana query language
+using grafana query generator
+
+prometheus=
+metric collection
+metric endpoint
+PromQL
+prometheus exporters
+TSDB
+
+prometheus installation
+----------------------
+sudo yum update -y
+download promethues https://prometheus.io/download/
+
+*download the source using curl, untar it and rename the extracted folder
+to prometheus files
+= curl -L0 url -L0
+https://github....prometheus.tar.gz
+tar -xvf prometheus....tar.gz
+mv prometheus..amd64 promethues-files
+
+*create prometheus user required directories and make prometheususer owner of
+the group
+sudo useradd --no-create-home --shell /bin/false prometheus
+sudo mkdir /etc/prometheus
+sudo mkdir /var/lib/prometheus
+sudo chown prometheus:prometheus /etc/prometheus
+sudo chown prometheus:prometheus /var/lib/prometheus
 
 
 

@@ -41,24 +41,95 @@ cloudwatch
 it work like a gatekipper, for cpu usage alarm, dashboard, metric
 
 
+
+
+
+
+
 =====================
-praveen 
+praveen singampalli youtube
 =====================
 private subnet
+
 **bastion host
+=typically use "jump box" (NAT/proxy/bastion host)to support
+ restricted outbound only public internet access
+ssh connectivity or port forward
+
+cidr = classless inter-domain routing
+ 10.0.0.0/16 ips from 10.0.0.0 to 10.0.255.255
+ 
+security groups = ec2 instances
+NACL = subnet level
+
+local= subnet
+destination = vpc,nat gateway, virtual private gateway, vpc endpoint
+
+rt1 - vpc hit - route to public subnet
+
+----------------------
+Lambda
+----------------------
+deploy python lambda function with .zip file archives
+deployment package with dependencies
+1. mkdir my-sourcecode-function
+2. cd my-sourcecode-function
+3. vim lambda_function.py
+4. pip install --target ./package requests
+5. cd package
+zip -r ../my-deployment-package.zip . 
+6. cd ..
+zip -g my-deployment-package.zip lambda_function.py
 
 
+route53
+-------------
+1.type of routing policy
+ = latency-based routing = user latency can be reduced by serving request from the region where network latency
+ is the lowest
+ geo DNS = geoloaction can be used to send traffic to resources based on the geographic 
+ weighted round-robin = two region servers are there we can divide the traffic based on 
+ 
+2. what is route 53
+3. how you integrate route53 with load balancer
+ 
+
+S3 bucket
+-----------------
+what is cross origin resource sharing?
+what are the types of s3 bucket?
+what types of bucket used in your project?
+what is versioning in bucket?
+s3 lifecycle
+
+**whenever there is code upload in S3 it will automatically triggered lambda
 
 
+application load balancer
+---------------------------
+an ALB only works at - LAYER 7 (HTTP). it has a wide range of
+ routing rules for incomming request based on host name
+path, query string, http method, http headers, source IP,
+ or port number.
+ 
+** ELB only allows routing based on port number
+
+ALB can route request to many ports on a single target.
+Plus , ALB can route requests to lambda functions
+
+ALB further supports server name indication(SNI), which allows it to serve many domain names
+
+there is limit, however to the number of certificate you can 
+attach to an ALB, namely 25 certificates plus the default certificate.
+
+ALB are typically used for web applications.
 
 
-
-
-
-
-
-
-
+Network load balancer
+----------------------------
+layer 4 load balancer
+NLB would be used for anthing that ALB dont cover . A typical use case would 
+be a near real time data streaming service (video,stock qoutes etc).
 
 
 
