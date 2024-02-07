@@ -1,0 +1,60 @@
+prometheus and grafana
+==========================
+minikube start
+minikube start --memory=4098 --driver=hyperkit
+
+kubectl get pods -A
+helm repo add prometheus-community https://prometheus-community.github
+helm install prometheus prometheus-community/prometheus
+
+kubectl get pods
+kubectl get svc
+
+kubectl expose service prometheus-server --type=NodePort
+ --target-port=9090 --name=prometheus-server-ext
+
+ minikube ip
+ 
+ 
+ grafana
+ ------------
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install grafana grafana/grafana
+
+to get the [passwordassword] 
+kubectl get secret --namespace default grafana -o jsonpath ...
+
+kubectl expose service grafana —-type=NodePort — target-port=3000 — name=grafana-ext
+
+grafana dashboard - import - 3662 - prometheus - import - 
+3662 - default dashboard
+ 
+prometheus matrics
+=kubectl expose service prometheus-kube-state-metrics --type=nodeport
+ --target-port=8080 --name=prometheus-kube-state-metrics-ext
+
+ minikube ip
+ 192.67.65.56/30421
+ 
+ metric will show - metrics - copy one query - kube_deployment_status
+ = it will show some data
+ 
+ kubectl get cm
+ kubectl editcm prometheus-server
+ 
+ **developer will write a metric server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
