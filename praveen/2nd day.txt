@@ -1,7 +1,0 @@
-Maven lifecycle = 
-validate, compile, test, package, integration, test, verify, install, deploy
-
-
-
-
-g
