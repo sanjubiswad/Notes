@@ -1,2 +1,43 @@
 Maven lifecycle = 
-validate, compile, test, package, integration, test, verify, install, deploy
+validate, compile, test, package, integration test, verify, install, deploy
+command = maven test
+
+jar = stand alone file, java archive runtime
+war = web application runtime, install on server
+
+compile = mvn compile
+test = mvn test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

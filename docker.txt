@@ -24,7 +24,7 @@ jenkins image(name volume)
 to go inside container
 = docker exec -it vte01 /bin/bash
 
-dockerfile
+dockerfile format
 ---------------
  install tomcat on centos - FROM
 pull centos from dockerhub - RUN
@@ -50,12 +50,22 @@ RUN mv apache/* /opt/tomcat
 EXPOSE 8080
 COPY ./webapp.war /opt/tomcat/webapps
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+---------------------
+
 
 dockerfile
 ----------------
 FROM nginx:latest
 MAINTAINER NAME EMAIL
 RUN apt-get -y update && apt-get -y upgrade && apt-get install -y php-fpm
+-------------------------
+
+FROM openjdk:8-jdk-alpine
+WORKDIR /app
+COPY ./target/*.jar /app.jar
+CMD ["java", "-jar", "/app.jar"]
+
+
 
 build image
 = docker build -t "webdev":Dockerfile"
