@@ -667,9 +667,18 @@ sudo chown prometheus:prometheus /etc/prometheus
 sudo chown prometheus:prometheus /var/lib/prometheus
 
 
+shell script praveen class
+====================================
+sed -n '1,3'p test.sh - print 1 to 3 lines
+awk '{print}' test.sh - print the whole file
+awk /manager/'{print}' test.sh 
+sed 's/tenth/eleven/g' test.sh rplace a value in file (g-globally)
 
+hello= devops = sre, 
+echo $hello 
+o/p = devops=sre
 
-
+https://attendee.gototraining.com/materials/download.tmpl?material
 
 
 
