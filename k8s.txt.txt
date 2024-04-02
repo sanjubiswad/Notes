@@ -1,0 +1,310 @@
+k8s 
+Day-31 | KUBERNETES ARCHITECTURE USING EXAMPLES
+========================
+docker = container runtime -> dockershim
+
+k8s = pod -> kubelet 
+ kubelet = responsible for running pods
+ kube proxy = networking,load balancing, use ip table for networking
+ cotainer runtime = responsible for running the container
+ 
+worker node = kube-proxy, kubelet, cotainer runtime, pod
+
+master node = 
+   api server = heart of k8s that will expose your k8s in external world
+   scheduler = scheduling your resources
+   etcd = key value store, cluster related info, as a backup
+   control manager = replica set
+   CCM - cloud control manager = for cloud provider
+
+
+
+
+Day-32 | How to Manage Hundreds of Kubernetes clusters ??? | KOPS
+=========================
+kops, kubeadm
+kops = k8s operation
+
+
+
+Day-34 | KUBERNETES DEPLOYMENT | REPLICASETS 
+=========================
+container vs pods vs deploy
+container = 
+pods = both of them share the same network
+deploy = healing and scaling - replicaset
+k8s controller = 
+
+dployment vs replicaset
+kubectl get all = to see all 
+vim pod.yml
+kubectl apply -f pod.yml
+
+kubectl get pods (-w = all the info)
+
+kubectl delete pod nginx
+
+k8s deployment.yml
+------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-app
+  labels:
+    app: sample-python-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-python-app
+  template:
+    metadata:
+      labels:
+        app: sample-python-app
+    spec:
+      containers:
+      - name: python-app
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+kubectl apply -f pod.yml		
+		
+		
+		
+
+DAY-35 | EVERYTHING ABOUT KUBERNETES SERVICES | DISCOVERY | LOAD BALANCING | NETWORKING
+============================		
+3 different pods will have 3 different ip address
+kube proxy will manage the ip's
+svc slove the problem - load balancing, service discovery, expose to world
+
+ip address -> labels and selectors
+ 
+1. cluster IP = inside, discovery and load balancing
+2. Nodeport =  allow to be access inside the org.
+3. Load balancer = expose your app to external world
+				eks -> elb ->public address
+
+		
+		
+Day-36 | KUBERNETES INTERVIEW QUESTIONS PART-1| What's Your Score ?
+=======================================
+1. difference b/w docker and kubernetes?
+docker is a container platfrom where as k8s is a container orchestration
+environment that offers capabilities like auto healing, auto scaling, 
+clustering and enterprise level support like load balancing.
+
+
+2.  k8s architechture
+	a. control plane(api server, scheduler, control manager, ccm, etcd)
+	b. data plan (kubelet, kube-proxy, container runtime)
+		
+		
+3.  namespace in k8s?
+	in k8s namespace is logical isolation of resources , network policies, rbac
+	 and everything. for example there are two project using same k8s cluster. one 
+	 project can use ns1 and other can use ns2 without any aauthentication or 
+	 overlap problems.
+
+4. role of kube proxy	
+
+
+
+
+
+	
+		
+DAY-37 | KUBERNETES SERVICES DEEP DIVE| LIVE DEMO | LEARN TRAFFIC FLOW USING KUBESHARK
+===================================
+minikube 
+kubectl get all
+kubectl delete deploy sample-deployment
+kubectl delete svc demo-service
+
+1.Dockerfile
+-----------------
+FROM ubuntu
+
+WORKDIR /app
+
+COPY requirments.txt /app
+COPY devops /app
+
+RUN apt-get update && \
+	apt-get install -y python3 python3-pip && \
+	pip install -r requirments.txt &&\
+	cd devops
+
+ENTRYPOINT ["python3"]
+CMD ["manage.py","runserver","0.0.0.0:8000"]
+
+
+docker build -t abhishek/python-sample-app-demo:v1 .
+
+vim deployment.yml
+----------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-app
+  labels:
+    app: sample-python-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-python-app
+  template:
+    metadata:
+      labels:
+        app: sample-python-app
+    spec:
+      containers:
+      - name: python-app
+        image: python-sample-app-demo:v1
+        ports:
+        - containerPort: 8000
+
+kubectl apply -f deployment.yml
+kubectl get deploy = info of deploy
+kubectl get pods = pod details
+kubectl get pods -o wide = ip add of the pods
+kubectl get pods -v=7 = moreinfo about pods (max v=9)
+
+kubectl delete pod sample-python-app-89578979876
+labels and selector will use as tag 
+minikube ssh
+
+if want to access app outside organization we have to use
+nodeport or loadbalancer
+
+vim service.yml
+-----------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-django-sample-app
+spec:
+  type: NodePort
+  selector:
+    app: sample-python-app
+  ports:
+    - port: 80
+      # By default and for convenience, the `targetPort` is set to
+      # the same value as the `port` field.
+      targetPort: 8000
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane
+      # will allocate a port from a range (default: 30000-32767)
+      nodePort: 30007
+
+
+kubectl apply -f service.yml
+kubectl get svc
+minikube ip
+curl -L https://192.168.64.10:30007/demo
+
+
+##how to access to outside world
+------------------------
+kubectl edit python-django-sample-app
+
+change type: NodePort to LoadBalancer(it will work only eks,aks nd will not work in minikube)
+
+we can chnge service using 
+vim service.yml or kubectl edit python-django-sample-app
+if using vim then we need to apply 
+=kubectl apply -f service.yml
+
+kubeshark
+==============
+install kubeshark to check load balancing
+
+
+
+DAY-38 | KUBERNETES INGRESS | WATCH DEMO USING LINK IN DESCRIPTION |
+=========================================
+stiky session
+ratio based
+
+1. enterprise and TLS load balancing
+	1.sticky
+	2.tls
+	3.path
+	4.host
+	5.ratiobased
+	
+kubernetes ingress controler
+--------------------
+	user will create ingress resources
+load balancer company will create ingress controller
+
+to check minikube service is up?
+-------------------------
+kubectl get pods
+kubectl get svc
+minikube ip
+	it will show ip and with that ip we can see output using curl command
+	
+curl -l http://192.168.64.11:30007/demo -v
+
+vim ingress.yml
+---------------------	
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-example
+spec:
+  rules:
+  - host: "foo.bar.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/bar"
+        backend:
+          service:
+            name: python-django-sample-app
+            port:
+              number: 80
+------			  
+	
+install ingress controller on minikube
+--------------
+ingress controller
+minikube addons enable ingress
+	
+	
+tls based routing
+------------	
+	
+	
+	
+	
+day-39 | Kubernetes Service, Ingress with TLS and Ingress Controllers with Live coding ||
+============================
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
