@@ -1,9 +1,106 @@
+21. Steps to follow to create VPC using Terraform
+---------------
+aws vpc in terraform
+1.create vpc 
+2.creat subnet
+3.create internet gateway
+4.create route table
+5.route table association
+
+
+#vpc
+resource "aws_vpc" "dpp-vpc" {
+	cidr_block = "10.1.0.0/16"
+	tags = {
+	 name = "dpw_vpc"
+	}
+}
+
+#subnet
+resource "aws_subnet" "dpp-public_subnet_01" {
+	vpc_id = aws_vpc.dpp-vpc.id
+	cidr_block = "10.1.1.0/24"
+	map_public_ip_on_launch = "true"
+	availability_zone = "us-east-1a"
+	tags = {
+	  name = "dpp-public_subnet_01"
+	}
+}
+
+#internet gateway
+resource "aws_inetrnet_gateway" "dpp-igw" {
+	vpc_id = aws_vpc.dpp-vpc.id
+	tags = {
+			name = "dpw-igw"
+	}
+}
+
+#route table
+resource "aws_route_table" "dpp-public-rt" {
+	vpc_id = aws_vpc.dpp-vpc.id
+	route {
+		cidr_block = "0.0.0.0/0"
+		gateway_id = aws_inetrnet_gateway.dpp-igw.id
+	}
+	tags = {
+	  name = "dpp-public-rt"
+	}
+}
+
+#route table association
+resource "aws_route_table_association" "dpp-rta-public-subnet-1" {
+	subnet_id = aws_subnet.dpp-public_subnet_01.id
+	route_table_id = aws_route_table.dpp-public-rt.ids
+} 
+
+resource "aws_route_table_association" "dpp-rta-public-subnet-2" {
+	subnet_id = aws_subnet.dpp-public_subnet_01.id
+	route_table_id = aws_route_table.dpp-public-rt.ids
+} 
+
+
+
+-----------------------------
+23. Cerate VPC using Terraform manifest file
+--------------------------
+add security groups
+resource "aws_security_group" "demo-sg" {
+  vpc_id = aws.vpc.dpp-vpc.id
+}
+
+resource "aws_instance" "demo-server" {
+	vpc_security_group_ids = ["aws_security_group.demo-sg.id"]
+}
+
+
+
+-------------------------
+24. Create DevOps instances using for_each in Terraform
+----------------------
+resource "aws_instance" "demo-server" {
+	for_each = toset(["jenkins-master", "build-slave", "ansible"])
+}
+
+
+
+---------------
+26.lecture
+---------------
+install ansible in ubuntu system
+	sudo apt update
+	sudo apt install software-properties-common
+	sudo add-apt-repository --yes --update ppa:ansible/ansible
+	sudo apt install ansible
+	
+
+----------------
 27.lecture
 ---------------
 ansible 
 
 create a host file for jenkins master under /opt
-vi hosts-
+vi hosts
+#[add private ip]
 
 [jenkins-master]
 10.2.2.
@@ -77,7 +174,17 @@ port 8080 need to be configure for jenkins in aws
 30.lecture
 -----------
 chnge the port number in terraform file
-terraform apply --auto approved
+add ingress 
+	ingress {
+	description		= "jenkins port"
+	from_port 		= 8080
+	to_port 		= 8080
+	protocol 		= "tcp"
+	cidr_blocks		= ["0.0.0.0/0"]
+	}
+	
+terraform plan
+terraform apply --auto-approved
 open jenkins in browser
  
 31.lecture
