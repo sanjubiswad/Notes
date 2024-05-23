@@ -173,6 +173,8 @@ port 8080 need to be configure for jenkins in aws
 
 30.lecture
 -----------
+/var/lib/jenkins/secrets/initialAdminPassword
+
 chnge the port number in terraform file
 add ingress 
 	ingress {
