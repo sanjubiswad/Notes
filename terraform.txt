@@ -1,5 +1,32 @@
 terraform
 =============
+create from exsisting configuration
+
+provider "aws" {
+  region = "ap-south-1"
+}
+import {
+	id = "i-06a247ffae30bbd0d"
+	to = aws_instances.example
+}
+terraform init
+terraform plan -generate-config-out=generated_resources.tf
+
+** copy config and paste it in main.tf file and 
+delete generated_resources file
+
+terraform import aws_instance.example.i-06a247ffae30bbd0d
+
+
+
+
+
+
+
+
+
+===================================
+
 provider "aws" {
   region = "ap-south-1"
 }
