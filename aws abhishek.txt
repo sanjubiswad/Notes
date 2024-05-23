@@ -1,0 +1,86 @@
+
+
+
+day 7 - AWS project
+=========================
+auto scaling using launch template - aws-prod-eg
+scp command to access private instance using bastion host
+
+
+
+
+
+
+Day-9 | AWS S3 Buckets Deep Dive | 2 Demo Projects with Code
+==========================
+s3 tag to find out total number of bucket
+bucket permission to add permission for iam users
+
+
+
+Day-10 | AWS CLI Deep Dive | Concept + Installation + Demo
+=================================
+aws cli - quick result, eg - aws s3 ls
+terraform
+cloud formation
+CDK
+api->programing
+
+aws cli s3 ls = to list all the bucket
+aws cli s3 mb = make bucket
+
+
+
+Day-11 | IaC with AWS CFT | Tips and Tricks to Write CFT | CFT vs Terraform |
+=================================
+CFT - template - cloud formation
+IAC - infra as code
+
+declarative  - what you see is what you have
+versioned - 
+
+cft vs cli
+cli - for short or quick actions, to see s3 bucket
+cft - create the whole infra
+
+drift detection
+vs studio - yaml, aws toolkit plugins
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

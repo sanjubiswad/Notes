@@ -1,9 +1,106 @@
+21. Steps to follow to create VPC using Terraform
+---------------
+aws vpc in terraform
+1.create vpc 
+2.creat subnet
+3.create internet gateway
+4.create route table
+5.route table association
+
+
+#vpc
+resource "aws_vpc" "dpp-vpc" {
+	cidr_block = "10.1.0.0/16"
+	tags = {
+	 name = "dpw_vpc"
+	}
+}
+
+#subnet
+resource "aws_subnet" "dpp-public_subnet_01" {
+	vpc_id = aws_vpc.dpp-vpc.id
+	cidr_block = "10.1.1.0/24"
+	map_public_ip_on_launch = "true"
+	availability_zone = "us-east-1a"
+	tags = {
+	  name = "dpp-public_subnet_01"
+	}
+}
+
+#internet gateway
+resource "aws_inetrnet_gateway" "dpp-igw" {
+	vpc_id = aws_vpc.dpp-vpc.id
+	tags = {
+			name = "dpw-igw"
+	}
+}
+
+#route table
+resource "aws_route_table" "dpp-public-rt" {
+	vpc_id = aws_vpc.dpp-vpc.id
+	route {
+		cidr_block = "0.0.0.0/0"
+		gateway_id = aws_inetrnet_gateway.dpp-igw.id
+	}
+	tags = {
+	  name = "dpp-public-rt"
+	}
+}
+
+#route table association
+resource "aws_route_table_association" "dpp-rta-public-subnet-1" {
+	subnet_id = aws_subnet.dpp-public_subnet_01.id
+	route_table_id = aws_route_table.dpp-public-rt.ids
+} 
+
+resource "aws_route_table_association" "dpp-rta-public-subnet-2" {
+	subnet_id = aws_subnet.dpp-public_subnet_01.id
+	route_table_id = aws_route_table.dpp-public-rt.ids
+} 
+
+
+
+-----------------------------
+23. Cerate VPC using Terraform manifest file
+--------------------------
+add security groups
+resource "aws_security_group" "demo-sg" {
+  vpc_id = aws.vpc.dpp-vpc.id
+}
+
+resource "aws_instance" "demo-server" {
+	vpc_security_group_ids = ["aws_security_group.demo-sg.id"]
+}
+
+
+
+-------------------------
+24. Create DevOps instances using for_each in Terraform
+----------------------
+resource "aws_instance" "demo-server" {
+	for_each = toset(["jenkins-master", "build-slave", "ansible"])
+}
+
+
+
+---------------
+26.lecture
+---------------
+install ansible in ubuntu system
+	sudo apt update
+	sudo apt install software-properties-common
+	sudo add-apt-repository --yes --update ppa:ansible/ansible
+	sudo apt install ansible
+	
+
+----------------
 27.lecture
 ---------------
 ansible 
 
 create a host file for jenkins master under /opt
-vi hosts-
+vi hosts
+#[add private ip]
 
 [jenkins-master]
 10.2.2.
@@ -77,7 +174,17 @@ port 8080 need to be configure for jenkins in aws
 30.lecture
 -----------
 chnge the port number in terraform file
-terraform apply --auto approved
+add ingress 
+	ingress {
+	description		= "jenkins port"
+	from_port 		= 8080
+	to_port 		= 8080
+	protocol 		= "tcp"
+	cidr_blocks		= ["0.0.0.0/0"]
+	}
+	
+terraform plan
+terraform apply --auto-approved
 open jenkins in browser
  
 31.lecture
@@ -131,22 +238,52 @@ ls
 mvn only work if you use full path /opt/apache-maven...
 or add this file in bash profile
 
-35.lecture
+
+
+
+
+35. Preparing for Jenkins master and slave configuration
 ---------------
 jenkins master slave configure
 1.change password fpr jenkins
 manage jenkins -> credential -> ssh username
 -> maven server -> add private key - dpp key
 
+Add Credentials
+Manage Jenkins --> Manage Credentials --> System --> Global credentials --> Add credentials
+Provide the below info to add credentials
+kind: ssh username with private key
+Scope: Global
+ID: maven_slave
+Username: ec2-user
+private key: dpo.pem key content
+
+
 36.lecture
 --------------
 add node
-manage jenkins -> manage nodes ->new ndes -> permanent agent
+manage jenkins -> manage nodes and clouds ->new nodes 
+-> permanent agent
 
 add private ip - add cred - save
 create a project and run it on maven label
 execute a shell command 
 = echo "hello i am slave system" >> /home/ubuntu/maven.txt
+
+Add node
+Follow the below setups to add a new slave node to the jenkins
+
+Goto Manage Jenkins --> Manage nodes and clouds --> New node --> Permanent Agent
+Provide the below info to add the node
+Number of executors: 3
+Remote root directory: /home/ec2-user/jenkins
+Labels: maven
+Usage: Use this node as much as possible
+Launch method: Launch agents via SSH
+Host: <Private_IP_of_Slave>
+Credentials: <Jenkins_Slave_Credentials>
+Host Key Verification Strategy: Non verifying Verification Strategy
+Availability: Keep this agent online as much as possible
 
 37.lecture
 ----------
@@ -177,10 +314,11 @@ git branch: 'main', url: 'https://github.tweet.git'
 
 
 
-37.lecture
+
+39. Adding build stage to Jenkinsfile
 -----------------
 jenkins file undertweet-trend
-= touch jenkinsfile
+= touch Jenkinsfile
 (copy pipeline and paste here)
 
 git add jenkinsfile
@@ -191,31 +329,46 @@ git push origin main
 pipeline select git 
 edit jenkins file ...remove git clone and add build stage
 =
+adding build stage
+------------------
+
+pipeline{
+	agent {
+		node {
+			label 'maven-slave'
+		}
+	}
 environment {
 	PATH = "/opt/apache-maven-3.9.2/bin:$PATH"
 }
- 
- stages {
+	stages {
       stage ("build"){
-		steps {
-			sh 'mvn clean deploy'
+		  steps {
+			  sh 'mvn clean deploy'
+			}
 		}
-	}
-  
-  
-  }
+	} 
+}
 
 
-38.lecture
+git add jenkinfile
+git commit -m "adding jenkinsfile"
+git push origin main
+
+
+40. Adding GitHub credentials to Jenkins
 ------------
 create github token and add it in jenkins
+settings -> developer settings -> generate new token, select all
+
+
 manage jenkins - > credentials ->system -> global credentials ->
 add credentials - > username and password
 
-39.lecture
+41. Setup multibranch pipeline job
 --------------
 multibranch pipeline
-create new branch git
+create new branch git web
 = git checkout -b stage
 will delete jenkinsfile and add it into stage branch
 
@@ -227,7 +380,7 @@ git push origin stage
 add jenkinsfile in stage branch
 
 
-40.lecture
+42. setup GitHub webhook
 --------------------
 github webhook (it will automatically trigger
 pipeline)

@@ -154,10 +154,15 @@ terraform init
 terraform plan (dry run)
 terraform apply --auto-approve
 
+terraform interview 
+-----------------------------
+https://www.youtube.com/watch?v=OOZkOJVH0rA
+
 =========================================
  what is terraform state file?
  what is backend terraform file?
  how to use terraform state file in a team?
+ 
  
 
 
