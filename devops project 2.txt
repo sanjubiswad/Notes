@@ -424,16 +424,20 @@ using github account ...then login
 add sonarcube plugin
 add sonarcube server
 system- >sonarcube server -> add -> sonarcube server
-url-> sonnarclou.io ->save
+url-> https://sonnarcloud.io/ ->save
 
-tools->add sonarcube scanner -> save
+manage jenkins-> tools->add sonarcube scanner -> save
 
 46.lecture
 -----------------
 sonarcube properties file
 account -> create a new organisation manually
 
-create project
+create organization
+name->key
+choose free plan
+
+create project->twiter-trend
 information -> collect name and projject key details
  and add ot in sonar.verbose file
  
@@ -460,9 +464,22 @@ jenkins ip address automatically chnaged so we need
  
 48.lecture
 ---------------------------
+build step:
+-----
+	stages 
+		stage("build") {
+			steps {
+				echo "build started"
+				sh 'mvn clean deploy -Dmaven.test.skip=true'
+				echo "build completed"
+		}
+		
+	}
+
+
 how to enable unit test in jenkinsfile
-add stage 
-	  stage("test") {
+-----
+	 stage("test") {
 		steps {
 			echo "unit test started"
 			sh 'mvn surefire-report:report'
@@ -481,7 +498,7 @@ add condition code smell = 50
 
 50.lecture
 ------------------------
-add quality gate stages
+add quality gate stages in jenkinsfile
 
  stage("Quality Gate"){
     steps {
