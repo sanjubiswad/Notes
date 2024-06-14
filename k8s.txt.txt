@@ -1,20 +1,32 @@
 k8s 
 Day-31 | KUBERNETES ARCHITECTURE USING EXAMPLES
 ========================
-docker = container runtime -> dockershim
+k8s advantage
+------------
+cluster
+auto scaling
+scaling
+load balancing
+
+docker = container runtime for k8s(crio-d, containerD) -> dockershim
 
 k8s = pod -> kubelet 
- kubelet = responsible for running pods
- kube proxy = networking,load balancing, use ip table for networking
+worker node =
+ kubelet = responsible for running pods, it check pod iis always in running state
+ kube proxy = networking,load balancing, use ip table for networking, 
+			  generating ip address,
  cotainer runtime = responsible for running the container
  
-worker node = kube-proxy, kubelet, cotainer runtime, pod
+
 
 master node = 
    api server = heart of k8s that will expose your k8s in external world
-   scheduler = scheduling your resources
+				core component of k8s, control plane of k8s, it will decide in 
+				which pod it should run
+   scheduler = scheduling your resources on k8s, api-server will decide the pod,
+			    and scheduler acts on it
    etcd = key value store, cluster related info, as a backup
-   control manager = replica set
+   control manager = replica set, 
    CCM - cloud control manager = for cloud provider
 
 
@@ -22,8 +34,22 @@ master node =
 
 Day-32 | How to Manage Hundreds of Kubernetes clusters ??? | KOPS
 =========================
+k8s distribution
+------------------
+k8s-openshift-ranctier-tanzo-eks-aks-gke-dke
+
 kops, kubeadm
 kops = k8s operation
+
+
+
+Day-33 | KUBERNETES PODS | DEPLOY YOUR FIRST APP
+===============================
+pod = one or group of container
+shared networking
+shared storage
+
+kubctl = interact with k8s
 
 
 
