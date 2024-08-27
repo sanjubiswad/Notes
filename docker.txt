@@ -77,6 +77,224 @@ create container
 =docker run -d --name demo-container -p 8081:8080 mycomcat
 
 docker stop (container name)
+Docker exec 
+-------------
+This command is used to access the container that 
+is running. Here is how to use it 
+
+=docker exec -it test_db bash
+mysql -uroot -pmy-secret-pw
+SHOW DATABASES;
+
+=======================================
+
+=======================================
+Docker abhishek
+-----------------------------
+docker daemon
+docker registry
+
+install docker
+= sudo apt install docker.io -y
+sudo usermod -aG docker ubuntu
+
+docker build -t sanju/1st_docker_image:latest .
+docker login
+docker push sanju/1st_docker_image:latest
+docker pull sanju/1st_docker_image:latest
+docker images
+
+--------------------------
+day-25 - docker containerzation django
+----------------------
+FROM ubuntu
+WORKDIR /app
+COPY requirments.txt /app {important for python app}
+RUN apt-get update && \
+    pip install -r requirments.txt
+ENTRYPOINT ["python"]
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+
+ENTRYPOINT= it can't be changed 	
+CMD = it can be change while executing
+
+docker build .
+docker run -p 8000:8000 -it 4rhiofvdnk
+
+
+
+
+-----------------------------------------
+day-26  Multi Stage Docker Builds 
+| Reduce Image Size by 800 % | Distroless Container Images
+-----------------------------------------
+docker build -t cal .
+docker images | head -5 [top 5 images]
+
+scratch = minimalist distroless images
+
+
+
+mutlistage Dockerfile
+-----------------------
+FROM ubuntu AS build
+RUN apt-get && apt-get install -y golang-go
+ENV GO111MODULE=off
+COPY ..
+RUN CGO_ENABLE=0 go build -o /app
+
+[here starts multi stage build]
+
+FROM scratch [for java search java distroless images][used for less image size]
+COPY --from=build /app /app
+ENTRYPOINT ["/app"]
+ 
+e.g https://docs.docker.com/get-started/docker-concepts/building-images/multi-stage-builds/
+
+FROM eclipse-temurin:21.0.2_13-jdk-jammy AS builder
+WORKDIR /opt/app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:go-offline
+COPY ./src ./src
+RUN ./mvnw clean install
+
+FROM eclipse-temurin:21.0.2_13-jre-jammy AS final
+WORKDIR /opt/app
+EXPOSE 8080
+COPY --from=builder /opt/app/target/*.jar /opt/app/*.jar
+ENTRYPOINT ["java", "-jar", "/opt/app/*.jar"]
+
+
+---------------------------
+Day-27 | Docker Volumes and Bind Mounts|
+Persistent Storage for Docker|
+------------------------------
+1. bind mounts
+2. volumes
+
+docker volume create abhishek
+
+
+---------------------
+Day-28 | Docker Networking | Bridge 
+vs Host vs Overlay |Secure containers with custom bridge network
+----------------------
+1. bridge networking
+2.host networking
+3.overlay networking [multiple host ]
+
+docker network ls = to see all the network
+docker network create secure-network [custom bridge network]
+
+
+---------------------------
+docker compose
+---------------------------
+https://github.com/docker/awesome-compose/blob/master/elasticsearch-logstash-kibana/README.md
+
+1.Create a Dockerfile
+
+# syntax=docker/dockerfile:1
+FROM python:3.10-alpine
+WORKDIR /code
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 5000
+COPY . .
+CMD ["flask", "run", "--debug"]
+
+2.explaination - 
+
+Build an image starting with the Python 3.10 image.
+Set the working directory to /code.
+Set environment variables used by the flask command.
+Install gcc and other dependencies
+Copy requirements.txt and install the Python dependencies.
+Add metadata to the image to describe that the container is listening on port 5000
+Copy the current directory . in the project to the workdir . in the image.
+Set the default command for the container to flask run --debug.
+
+
+3.compose.yaml
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+  redis:
+    image: "redis:alpine"
+	
+$ docker-compose up
+
+This Compose file defines two services: web and redis.
+
+The web service uses an image that's built from the Dockerfile 
+in the current directory. It then binds the container and the
+ host machine to the exposed port, 8000. This example
+ service uses the default port for the Flask web server, 5000.
+The redis service uses a public Redis image pulled from 
+the Docker Hub registry.
+	
+*** node.js nginx - redis 
+nginx Dockerfile
+
+= FROM nginx1.21.6
+  RUN rm /etc/nginx/conf.d/default.conf
+  COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+web Dockerfile
+
+= FROM node:14.17.3-alpine3.14
+  WORKDIR /usr/src/app
+  COPY package.json package-lock.json ./
+  RUN npm ci
+  COPY ./server.js ./
+  CMD ["npm","start"]
+
+--------------
+ normal method without compose file
+ docker build web/web1:latest
+ docker build nginx/
+ 
+ docker run -d -p 5000:81 web1
+ docker run -d -p 5000:82 web2
+ 
+--------------
+
+compose.yaml
+=
+
+services:
+  redis:
+    image: 'redislabs/redismod'
+    ports:
+      - '6379:6379'
+  web1:
+    restart: on-failure
+    build: ./web
+    hostname: web1
+    ports:
+      - '81:5000'
+  web2:
+    restart: on-failure
+    build: ./web
+    hostname: web2
+    ports:
+      - '82:5000'
+  nginx:
+    build: ./nginx
+    ports:
+    - '80:80'
+    depends_on:
+    - web1
+    - web2
+
+
 
 
 
