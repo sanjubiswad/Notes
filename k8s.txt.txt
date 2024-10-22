@@ -15,7 +15,7 @@ worker node =
  kubelet = responsible for running pods, it check pod iis always in running state
  kube proxy = networking,load balancing, use ip table for networking, 
 			  generating ip address,
- cotainer runtime = responsible for running the container
+ cotainer runtime = responsible for running the container just like java runtime
  
 
 
