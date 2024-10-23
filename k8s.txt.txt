@@ -249,6 +249,21 @@ install kubeshark to check load balancing
 
 
 
+Extra: Kubernetes Service, Ingress with TLS and Ingress Controllers
+==================================
+Kind: Ingress
+kubectl apply -f ingress.yml
+
+Host based routing - Host: foo.bar.com
+= curl 192.168.59.100 -H 'host: foo.bar.com'
+
+kubectl get ing
+path based routing  = path: /first
+curl 192.168.59.100/first -H 'host: foo.bar.com'
+
+
+
+
 DAY-38 | KUBERNETES INGRESS | WATCH DEMO USING LINK IN DESCRIPTION |
 =========================================
 stiky session
